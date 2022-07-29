@@ -1,0 +1,16 @@
+.bg {
+  background-image: linear-gradient(to right, #9796f0, #fbc7d4);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+.game-container {
+  width: 700px;
+  margin-top: 20px;
+}
+.emoji-inside-container {
+  display: flex;
+  max-width: 700px;
+  flex-wrap: wrap;
+  margin-top: 50px;
+}
