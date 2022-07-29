@@ -22,12 +22,34 @@ const navBar = {
   alt: 'emoji logo',
 }
 
+const emojisIdList = []
+
 class EmojiGame extends Component {
-  state = {score: 0, topScore: 0}
+  state = {score: 0, topScore: 0, list: emojisIdList}
+
+  clickedOnEmoji = id => {
+    const {list, score, topScore} = this.state
+
+    if (list.includes(id)) {
+      console.log('GAME OVER')
+      if (score > topScore) {
+        this.setState({topScore: score})
+      }
+    } else {
+      this.setState(prevState => ({
+        list: [...prevState.list, id],
+        score: prevState.score + 1,
+      }))
+    }
+  }
 
   render() {
-    const {score, topScore} = this.state
-    const {emojisList} = this.props
+    const {score, topScore, list} = this.state
+
+    const shuffledEmojisList = () => {
+      const {emojisList} = this.props
+      return emojisList.sort(() => Math.random() - 0.5)
+    }
 
     return (
       <div className="bg">
@@ -37,8 +59,12 @@ class EmojiGame extends Component {
           </div>
           <div className="emoji-container">
             <ul className="emoji-inside-container">
-              {emojisList.map(each => (
-                <CreateEmojiCard details={each} key={each.id} />
+              {shuffledEmojisList().map(each => (
+                <CreateEmojiCard
+                  details={each}
+                  key={each.id}
+                  onClicked={this.clickedOnEmoji}
+                />
               ))}
             </ul>
           </div>
